@@ -55,3 +55,4 @@ df['Price_VND'] = df['Price'] * TIGIA_USD_VND
 print("Đã hoàn tất chuẩn hoá. Lưu ra file mới.")
 
 df.to_csv('ITA105_Lab_1_Cleaned.csv', index=False)
+#666
