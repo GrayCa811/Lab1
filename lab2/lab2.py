@@ -54,6 +54,7 @@ for col in numeric_cols_housing:
     lower = df_housing_clean[col].quantile(0.01)
     upper = df_housing_clean[col].quantile(0.99)
     df_housing_clean[col] = np.clip(df_housing_clean[col], lower, upper)
+    df_housing_clean[col] = df_housing_clean[col].clip(lower=lower, upper=upper)
 
 plt.figure(figsize=(12, 4))
 for i, col in enumerate(numeric_cols_housing, 1):
@@ -97,6 +98,7 @@ print(f"Số ngoại lệ IoT theo Z-score: {df_iot['is_outlier_z'].sum()}")
 df_iot_clean = df_iot.copy()
 df_iot_clean.loc[df_iot_clean['is_outlier_z'], 'temperature'] = np.nan
 df_iot_clean['temperature'] = df_iot_clean.groupby('sensor_id')['temperature'].transform(lambda x: x.interpolate())
+df_iot_clean['temperature'] = df_iot_clean.groupby('sensor_id')['temperature'].transform(lambda x: x.interpolate().bfill().ffill())
 
 
 print("\n" + "="*50)
